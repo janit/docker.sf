@@ -1,20 +1,6 @@
 version: '2'
 
 services:
-#  h2o:
-#    image: lkwg82/h2o-http2-server
-#    ports:
-#       - "8088:88"
-#    volumes:
-#       - "/etc/h2o:/etc/h2o"
-#       - "/etc/letsencrypt:/etc/letsencrypt"
-#       - "/var/log/h2o:/var/log/h2o"
-#    working_dir: /etc/h2o
-#    restart: always
-
-  varnish:
-    build: docker/varnish/
-
   nginx:
     image: nginx
     ports:
@@ -47,3 +33,6 @@ services:
 
   redis:
     image: redis:latest
+
+  varnish:
+    build: docker/varnish/

@@ -1,4 +1,6 @@
-symfony
-=======
+Symfony and Docker example setup
+================================
 
-A Symfony project created on August 2, 2016, 12:44 am.
+Example of a Symfony3 application setup in a docker environment with with Nginx, MariaDB, PHP 7, Varnish and Redis.
+
+Details: https://www.symfony.fi/entry/why-you-should-consider-docker-for-you-symfony-projects

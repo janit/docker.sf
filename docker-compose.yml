@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+#  h2o:
+#    image: lkwg82/h2o-http2-server
+#    ports:
+#       - "8088:88"
+#    volumes:
+#       - "/etc/h2o:/etc/h2o"
+#       - "/etc/letsencrypt:/etc/letsencrypt"
+#       - "/var/log/h2o:/var/log/h2o"
+#    working_dir: /etc/h2o
+#    restart: always
+
+  varnish:
+    build: docker/varnish/
+
+  nginx:
+    image: nginx
+    ports:
+      - 8086:80
+    volumes:
+      - ./:/var/www/symfony
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - fpm
+      - varnish
+
+  fpm:
+    build: docker/php-fpm/
+    links:
+      - redis
+      - mysql
+    volumes:
+      - ./:/var/www/symfony
+      - ./docker/php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: devdb
+      MYSQL_USER: devdb
+      MYSQL_PASSWORD: devdb
+      MYSQL_ROOT_PASSWORD: 
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+
+  redis:
+    image: redis:latest
